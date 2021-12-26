@@ -1,2 +1,9 @@
 *.class
 *.log
+target/
+logs/
+!project/build.properties
+.vscode/
+.metals/
+.bsp/
+.bloop/
