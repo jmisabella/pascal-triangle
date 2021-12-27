@@ -8,9 +8,9 @@ trait BooleanProbability {
   type _PascalsTriangle <: PascalsTriangle 
   val pascal: _PascalsTriangle
 
-  // TODO: test
-  def round(value: Double, numberOfDecimals: Int): Double = {
-    val placementMultiplier = pow(10, numberOfDecimals)
+  // scale is number of decimal digits to preserve when rounding
+  def round(value: Double, scale: Int): Double = {
+    val placementMultiplier = pow(10, scale)
     floor(value * placementMultiplier + 0.5) / placementMultiplier
   }
 

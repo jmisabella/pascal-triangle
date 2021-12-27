@@ -70,6 +70,14 @@ class CombinationCountSpec extends AnyFlatSpec {
     val actual = combinationByFactorial.combinationCount(n, k).toString()
     assert(actual == expected, s"Expected [$expected], actual [$actual]")
   }
+
+  it should "evaluate 1000C25 as 47,641,862,536,236,518,640,933,948,075,167,736,642,053,976,275,040" in {
+    val n = 1000
+    val k = 25
+    val expected = s"""${n}C${k} = ${"47,641,862,536,236,518,640,933,948,075,167,736,642,053,976,275,040".replace(",", "")}"""
+    val actual = combinationByFactorial.combinationCount(n, k).toString()
+    assert(actual == expected, s"Expected [$expected], actual [$actual]")
+  }
   
   it should "evaluate 10,000C7 as 1,979,963,788,224,528,536,430,000" in {
     val n = 10000 
@@ -128,7 +136,15 @@ class CombinationCountSpec extends AnyFlatSpec {
     assert(actual == expected, s"Expected [$expected], actual [$actual]")
   }
 
-  //// takes way too long using Pascal's Triangle method  
+  it should "evaluate 1000C25 as 47,641,862,536,236,518,640,933,948,075,167,736,642,053,976,275,040" in {
+    val n = 1000
+    val k = 25
+    val expected = s"""${n}C${k} = ${"47,641,862,536,236,518,640,933,948,075,167,736,642,053,976,275,040".replace(",", "")}"""
+    val actual = combinationByPascalsTriangle.combinationCount(n, k).toString()
+    assert(actual == expected, s"Expected [$expected], actual [$actual]")
+  }
+
+  //// n=10,000 takes way too long using Pascal's Triangle method! 
   // it should "evaluate 10,000C7 as 1,979,963,788,224,528,536,430,000" in {
   //   val n = 10000 
   //   val k = 7

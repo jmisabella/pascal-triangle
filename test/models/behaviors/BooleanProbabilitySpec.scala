@@ -80,4 +80,53 @@ class BooleanProbabilitySpec extends AnyFlatSpec {
     assert(expected == actual, s"Expected [$expected], actual [$actual]")
   }
 
+  it should "round to nearest single digit or 3.1415926535897932 as 3" in {
+    val value = 3.1415926535897932
+    val expected: Double = 3
+    val actual = probability.round(value, 0)
+    assert(expected == actual, s"Expected [$expected], actual [$actual]")
+  }
+
+
+  it should "round to nearest tenth for 3.1415926535897932 as 3.1" in {
+    val value = 3.1415926535897932
+    val expected = 3.1
+    val actual = probability.round(value, 1)
+    assert(expected == actual, s"Expected [$expected], actual [$actual]")
+  }
+  
+  it should "round to nearest hundredth for 3.1415926535897932 as 3.14" in {
+    val value = 3.1415926535897932
+    val expected = 3.14
+    val actual = probability.round(value, 2)
+    assert(expected == actual, s"Expected [$expected], actual [$actual]")
+  }
+
+  it should "round to nearest thousandth for 3.1415926535897932 as 3.142" in {
+    val value = 3.1415926535897932
+    val expected = 3.142
+    val actual = probability.round(value, 3)
+    assert(expected == actual, s"Expected [$expected], actual [$actual]")
+  }
+
+  it should "round to nearest ten-thousandth for 3.1415926535897932 as 3.1416" in {
+    val value = 3.1415926535897932
+    val expected = 3.1416
+    val actual = probability.round(value, 4)
+    assert(expected == actual, s"Expected [$expected], actual [$actual]")
+  }
+
+  it should "round to nearest hundred-thousandth for 3.1415926535897932 as 3.14159" in {
+    val value = 3.1415926535897932
+    val expected = 3.14159
+    val actual = probability.round(value, 5)
+    assert(expected == actual, s"Expected [$expected], actual [$actual]")
+  }
+
+  it should "round to nearest millianth for 3.1415926535897932 as 3.141593" in {
+    val value = 3.1415926535897932
+    val expected = 3.141593
+    val actual = probability.round(value, 6)
+    assert(expected == actual, s"Expected [$expected], actual [$actual]")
+  }
 }
