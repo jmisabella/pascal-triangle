@@ -55,7 +55,7 @@ class PascalsTriangleSpec extends AnyFlatSpec {
     val value = 100
     val expectedRowCount = 100
     val result = pascalByFactorial.pascalTriangle(value)
-    println("RESULT: " + result) 
+    // println("RESULT: " + result) 
     assert(result.length == expectedRowCount, s"Expected length [$expectedRowCount], actual length [${result.length}]")
   }
 
@@ -63,7 +63,7 @@ class PascalsTriangleSpec extends AnyFlatSpec {
     val value = 250
     val expectedRowCount = 250
     val result = pascalByFactorial.pascalTriangle(value)
-    println("RESULT: " + result) 
+    // println("RESULT: " + result) 
     assert(result.length == expectedRowCount, s"Expected length [$expectedRowCount], actual length [${result.length}]")
   }
 
