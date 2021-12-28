@@ -1,8 +1,9 @@
 package models.behaviors.pascal
 
-import models.behaviors.{ Factorial, ElementWiseAddition }
+import models.behaviors.{ Factorial, ElementWiseAddition, ExponentialApproximation }
 
 import org.scalatest.flatspec.AnyFlatSpec
+import models.behaviors.ExponentialApproximation
 
 class PascalsTriangleSpec extends AnyFlatSpec {
   private case object _factorial extends Factorial
@@ -15,6 +16,7 @@ class PascalsTriangleSpec extends AnyFlatSpec {
     override type _ElementWiseAddition = ElementWiseAddition
     override val addition = _addition 
   }
+  private case object formatter extends ExponentialApproximation
 
   // "PascalsTriangle behavior" should "create 1 row for 0" in {
   //   val value = 0 
@@ -87,6 +89,17 @@ class PascalsTriangleSpec extends AnyFlatSpec {
     val actual = pascalByElementWiseAddition.pascalTriangle(value)
     assert(expected == actual, s"Expected [$expected], actual [$actual]")
   }
+
+  it should "create 75 rows for 75" in {
+    val value =75 
+    val expectedRowCount =75 
+    val result = pascalByElementWiseAddition.pascalTriangle(value)
+    assert(result.length == expectedRowCount, s"Expected length [$expectedRowCount], actual length [${result.length}]")
+
+    // val computed = pascalByElementWiseAddition.pascalTriangle(value).take(75).toList.map(formatter.format(_, 7, 2))
+    // println("RESULT HEY: " + computed)
+  }
+
 
   it should "create 250 rows for 250" in {
     val value = 250

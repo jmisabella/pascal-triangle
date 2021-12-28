@@ -1,6 +1,5 @@
 package models.classes
 
-// TODO: use inside of a behavior
 case class Combination(n: Int, k: Int, combinations: BigInt) {
   require(
     k <= n, 

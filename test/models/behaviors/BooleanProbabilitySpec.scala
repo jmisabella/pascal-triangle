@@ -123,7 +123,7 @@ class BooleanProbabilitySpec extends AnyFlatSpec {
     assert(expected == actual, s"Expected [$expected], actual [$actual]")
   }
 
-  it should "round to nearest millianth for 3.1415926535897932 as 3.141593" in {
+  it should "round to nearest millionth for 3.1415926535897932 as 3.141593" in {
     val value = 3.1415926535897932
     val expected = 3.141593
     val actual = probability.round(value, 6)
