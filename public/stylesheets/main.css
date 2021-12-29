@@ -1,4 +1,17 @@
 
+#modal {
+  min-height:0;
+  min-width:0;
+  position: absolute; 
+  min-width: 11px !important;
+  width: auto !important;
+}
+
+#modal-content {
+  min-width: 11px !important;
+  width: auto !important;
+}
+
 #triangle, #test {
   width: 700px; 
   margin: 2px; 
