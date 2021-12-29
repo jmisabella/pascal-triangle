@@ -1,6 +1,36 @@
 var webSocket;
 var messageInput;
 
+$(document).ready(function() {
+  // $(".triangle-row span").hover(function() {
+  //   alert('hello');
+  //   return false;
+  // });
+
+  $(".triangle-row span").hover(function() {
+    var clazz = $(this).attr("class");
+    // $("#modal").html("<span>" + clazz + "</span>");
+    // $("#modal").val("<span>" + clazz + "</span>");
+    // $("#modal").val(clazz);
+    $("#modal-content").html(clazz);
+    // $("#modal.modal-content").html(clazz);
+    window.$('#modal').modal(function() {
+      // $( this ).fadeOut( 100 );
+      // $( this ).fadeIn( 500 );
+      show: true
+      show: false
+    });
+
+    // jQuery('#modal').modal({
+    //   show: true
+    // });
+
+    // $('#modal').modal({
+    //   show: true
+    // });
+  });
+});
+
 function init() {
     webSocket = new WebSocket("ws://localhost:9000/ws");
     webSocket.onopen = onOpen;
