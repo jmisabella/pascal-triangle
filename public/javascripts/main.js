@@ -1,19 +1,25 @@
 var webSocket;
 var messageInput;
 
+$(document).on('mousemove', function(e){
+  $("#modal").css({
+     left:  e.pageX - 200,
+     top:   e.pageY,
+     show: false 
+  });
+});
+
 $(document).ready(function() {
   // $(".triangle-row span").hover(function() {
   //   alert('hello');
   //   return false;
   // });
 
-  $(".triangle-row span").hover(function() {
+  $(".triangle-row span").hover(function(e) {
+
     var clazz = $(this).attr("class");
-    // $("#modal").html("<span>" + clazz + "</span>");
-    // $("#modal").val("<span>" + clazz + "</span>");
-    // $("#modal").val(clazz);
     $("#modal-content").html(clazz);
-    // $("#modal.modal-content").html(clazz);
+    
     window.$('#modal').modal(function() {
       // $( this ).fadeOut( 100 );
       // $( this ).fadeIn( 500 );
