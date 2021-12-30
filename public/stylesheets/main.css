@@ -8,6 +8,10 @@
 }
 
 #modal-content {
+
+  font-size:30px !important;
+
+
   min-width: 11px !important;
   width: auto !important;
 }

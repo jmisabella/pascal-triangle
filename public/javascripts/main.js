@@ -3,8 +3,11 @@ var messageInput;
 
 $(document).on('mousemove', function(e){
   $("#modal").css({
+    //  left:  e.pageX - 7,
+    //  top:   e.pageY - 30,
+    //  show: false 
      left:  e.pageX - 7,
-     top:   e.pageY - 30,
+     top:   e.pageY - 60,
      show: false 
   });
 });
@@ -15,7 +18,6 @@ $("#rows").on('keyup', function(e){
     rows = 1000;
   }
   $(this).val(rows);
-  // TODO: fire this request to server
 
   // create the message as json
   let jsonMessage = {
@@ -32,11 +34,9 @@ $(document).ready(function() {
   $(".triangle-row span").mouseenter(function() {
     var clazz = $(this).attr("class");
     $("#modal-content").html(clazz);
-    // $("#modal").fadeIn(500);
   });
   $(".triangle-row span").mouseleave(function() {
     $("#modal-content").html("");
-    // $("#modal").fadeOut(100);
   });
 });
 
@@ -52,11 +52,9 @@ function init() {
   $(".triangle-row span").mouseenter(function() {
     var clazz = $(this).attr("class");
     $("#modal-content").html(clazz);
-    // $("#modal").fadeIn(500);
   });
   $(".triangle-row span").mouseleave(function() {
     $("#modal-content").html("");
-    // $("#modal").fadeOut(100);
   });
 
 }
@@ -82,11 +80,10 @@ function onMessage(event) {
   console.log("New Data: ", receivedData);
   // get the text from the "body" field of the json we
   // receive from the server.
-  // appendServerMessageToView("Server", receivedData.body);
   
-  var firstRow = head(receivedData.body.rows);
-  console.log("HERE: " + head(firstRow.row).actual);
-  console.log("HERE: " + head(firstRow.row).approximation);
+  // var firstRow = head(receivedData.body.rows);
+  // console.log("HERE: " + head(firstRow.row).actual);
+  // console.log("HERE: " + head(firstRow.row).approximation);
 
   var i;
   var markup = "";
@@ -110,14 +107,15 @@ function onMessage(event) {
       fontSizePixels = 10;
     } else if (i >= 9 && i <= 19) {
       fontSizePixels = 9;
-    } else if (i >= 20 && i <= 35) {
-      fontSizePixels = 8;
-    } else if (i >= 36 && i <= 46) {
-      fontSizePixels = 7;
-    } else if (i >= 47 && i <= 52) {
-      fontSizePixels = 6;
+    // } else if (i >= 20 && i <= 35) {
+    //   fontSizePixels = 8;
+    // } else if (i >= 36 && i <= 46) {
+    //   fontSizePixels = 7;
+    // } else if (i >= 47 && i <= 52) {
+    //   fontSizePixels = 6;
     } else {
-      fontSizePixels = 5;
+      // fontSizePixels = 5;
+      fontSizePixels = 8;
     }
     markup = markup + triangleRowMarkup(receivedData.body.rows[i], fontSizePixels); 
   }
