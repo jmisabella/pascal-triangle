@@ -35,8 +35,7 @@ class SimpleWebSocketActor(clientActorRef: ActorRef) extends Actor {
       // val result = result1.mkString("""{ "rows": [""", ", ", """]}""")
 
       val result: String = Triangle.formattedTriangleJson(rows, 6, 2)
-
-      println("HEYYY: " + result)
+      // println("HEYYY: " + result)
 
       val json: JsValue = Json.parse(s"""{ "body": $result }""")
       // val json: JsValue = Json.parse(s"""{"body": "You said, ‘$clientMessage’"}""")

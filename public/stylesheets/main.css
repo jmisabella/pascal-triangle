@@ -12,10 +12,10 @@
   width: auto !important;
 }
 
-#triangle, #test {
-  width: 700px; 
-  margin: 2px; 
-  padding: 2px;
+#triangle {
+  /* width: 700px;  */
+  margin: 1px; 
+  padding: 1px;
 }
 
 .triangle-row {
@@ -67,4 +67,10 @@
 }
 .font-7 {
   font-size: 7px !important;
+}
+.font-6 {
+  font-size: 6px !important;
+}
+.font-5 {
+  font-size: 5px !important;
 }

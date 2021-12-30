@@ -47,6 +47,18 @@ function init() {
   webSocket.onmessage = onMessage;
   webSocket.onerror = onError;
   $("#message-input").focus();
+
+
+  $(".triangle-row span").mouseenter(function() {
+    var clazz = $(this).attr("class");
+    $("#modal-content").html(clazz);
+    // $("#modal").fadeIn(500);
+  });
+  $(".triangle-row span").mouseleave(function() {
+    $("#modal-content").html("");
+    // $("#modal").fadeOut(100);
+  });
+
 }
 
 function onOpen(event) {
@@ -71,18 +83,82 @@ function onMessage(event) {
   // get the text from the "body" field of the json we
   // receive from the server.
   // appendServerMessageToView("Server", receivedData.body);
+  
+  var firstRow = head(receivedData.body.rows);
+  console.log("HERE: " + head(firstRow.row).actual);
+  console.log("HERE: " + head(firstRow.row).approximation);
 
-  $("#triangle").html("<span>" + receivedData.body + "<br /><br /></span>");
+  var i;
+  var markup = "";
+  for (i = 0; i < receivedData.body.rows.length; ++i) {
+    var fontSizePixels = 6;
+    if (i == 0) {
+      fontSizePixels = 20;
+    } else if (i == 1) {
+      fontSizePixels = 18;
+    } else if (i == 2) {
+      fontSizePixels = 15;
+    } else if (i == 3) {
+      fontSizePixels = 14;
+    } else if (i == 4) {
+      fontSizePixels = 13;
+    } else if (i == 5) {
+      fontSizePixels = 12;
+    } else if (i == 6) {
+      fontSizePixels = 11;
+    } else if (i == 7 || i == 8) {
+      fontSizePixels = 10;
+    } else if (i >= 9 && i <= 19) {
+      fontSizePixels = 9;
+    } else if (i >= 20 && i <= 35) {
+      fontSizePixels = 8;
+    } else if (i >= 36 && i <= 46) {
+      fontSizePixels = 7;
+    } else if (i >= 47 && i <= 52) {
+      fontSizePixels = 6;
+    } else {
+      fontSizePixels = 5;
+    }
+    markup = markup + triangleRowMarkup(receivedData.body.rows[i], fontSizePixels); 
+  }
+  // alert(markup);
+  // alert(receivedData.body);
 
+
+  $("#triangle").html(markup);
+
+  $(".triangle-row span").mouseenter(function() {
+    var clazz = $(this).attr("class");
+    $("#modal-content").html(clazz);
+    // $("#modal").fadeIn(500);
+  });
+  $(".triangle-row span").mouseleave(function() {
+    $("#modal-content").html("");
+    // $("#modal").fadeOut(100);
+  });
+
+
+  // $("#triangle").html("<span>" + receivedData.body + "<br /><br /></span>");
 }
 
-// function appendClientMessageToView(title, message) {
-//   $("#message-content").append("<span>" + title + ": " + message + "<br /></span>");
-// }
+function head(lst) {
+  return lst[0];
+}
 
-// function appendServerMessageToView(title, message) {
-//   $("#message-content").append("<span>" + title + ": " + message + "<br /><br /></span>");
-// }
+function tail(lst) {
+  return lst.slice(1);
+}
+
+function triangleRowMarkup(rowObjArray, fontPixelSize=6) {
+  var markup = "<div class='triangle-row font-" + fontPixelSize + "'>";
+  var remaining = rowObjArray.row; 
+  while (remaining.length > 0) {
+    var next = head(remaining);
+    remaining = tail(remaining);
+    markup += "<span class='" + next.actual + "'>" + next.approximation + "</span>"
+  }
+  return markup + "</div>";
+}
 
 function consoleLog(message) {
   console.log("New message: ", message);
