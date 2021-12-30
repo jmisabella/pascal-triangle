@@ -32,11 +32,11 @@ $(document).ready(function() {
   $(".triangle-row span").mouseenter(function() {
     var clazz = $(this).attr("class");
     $("#modal-content").html(clazz);
-    $("#modal").fadeIn(500);
+    // $("#modal").fadeIn(500);
   });
   $(".triangle-row span").mouseleave(function() {
     $("#modal-content").html("");
-    $("#modal").fadeOut(100);
+    // $("#modal").fadeOut(100);
   });
 });
 
@@ -70,7 +70,10 @@ function onMessage(event) {
   console.log("New Data: ", receivedData);
   // get the text from the "body" field of the json we
   // receive from the server.
-  appendServerMessageToView("Server", receivedData.body);
+  // appendServerMessageToView("Server", receivedData.body);
+
+  $("#triangle").html("<span>" + receivedData.body + "<br /><br /></span>");
+
 }
 
 // function appendClientMessageToView(title, message) {

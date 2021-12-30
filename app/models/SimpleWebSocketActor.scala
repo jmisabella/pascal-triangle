@@ -5,7 +5,7 @@ import models.modules.Triangle
 import akka.actor._
 import play.api.libs.json._
 import play.api.libs.json.Json
-import models.classes.Approximation
+import models.classes.{ Approximation, Approximations }
 
 object SimpleWebSocketActor {
   // DOCS: Props is a ActorRef configuration object, that is immutable, so it is 
@@ -27,15 +27,19 @@ class SimpleWebSocketActor(clientActorRef: ActorRef) extends Actor {
       val clientMessage = getMessage(jsValue)
 
       val rows = clientMessage.toInt
-      var triangle = Triangle.pascalTriangle(rows).map(Triangle.format(_, 6, 2))
-      var result: Seq[Seq[Approximation]] = Nil
-      for (i <- 0 until rows) {
-        result = result ++ Seq(triangle.head)
-        triangle = triangle.tail
-      }
+
+      println("beginning processing...") 
+
+      // val result0: Seq[Seq[BigInt]] = Triangle.pascalTriangle(rows)
+      // val result1: Seq[Approximations] = result0.map(x => Triangle.format(x, 6, 2)).toList
+      // val result = result1.mkString("""{ "rows": [""", ", ", """]}""")
+
+      val result: String = Triangle.formattedTriangleJson(rows, 6, 2)
+
       println("HEYYY: " + result)
 
-      val json: JsValue = Json.parse(s"""{"body": "You said, ‘$clientMessage’"}""")
+      val json: JsValue = Json.parse(s"""{ "body": $result }""")
+      // val json: JsValue = Json.parse(s"""{"body": "You said, ‘$clientMessage’"}""")
       clientActorRef ! (json)
   }
 

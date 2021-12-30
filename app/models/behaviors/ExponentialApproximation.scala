@@ -1,6 +1,6 @@
 package models.behaviors
 
-import _root_.models.classes.Approximation
+import _root_.models.classes.{ Approximation, Approximations }
 
 import java.text.DecimalFormat
 import java.math.RoundingMode
@@ -17,5 +17,6 @@ trait ExponentialApproximation {
     } 
   }
 
-  def format(xs: Seq[BigInt], maxIntegerLength: Int, scale: Int): Seq[Approximation] = xs.map(format(_, maxIntegerLength, scale))
+  // def format(xs: Seq[BigInt], maxIntegerLength: Int, scale: Int): Seq[Approximation] = xs.map(format(_, maxIntegerLength, scale))
+  def format(xs: Seq[BigInt], maxIntegerLength: Int, scale: Int): Approximations = Approximations(xs.map(format(_, maxIntegerLength, scale)))
 }

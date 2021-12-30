@@ -97,6 +97,7 @@ class PascalsTriangleSpec extends AnyFlatSpec {
     assert(result.length == expectedRowCount, s"Expected length [$expectedRowCount], actual length [${result.length}]")
 
     // val computed = pascalByElementWiseAddition.pascalTriangle(value).take(75).toList.map(formatter.format(_, 7, 2))
+    // val computed = pascalByElementWiseAddition.pascalTriangle(value).take(75).toList.map(formatter.format(_, 7, 2).toString())
     // println("RESULT HEY: " + computed)
   }
 
