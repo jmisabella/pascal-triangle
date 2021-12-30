@@ -9,6 +9,25 @@ $(document).on('mousemove', function(e){
   });
 });
 
+$("#rows").on('keyup', function(e){
+  var rows = $(this).val().replace(/[^0-9]/g,'');
+  if (rows > 1000) {
+    rows = 1000;
+  }
+  $(this).val(rows);
+  // TODO: fire this request to server
+
+  // create the message as json
+  let jsonMessage = {
+    message: rows 
+  };
+
+  // send our json message to the server
+  sendToServer(jsonMessage);
+
+
+});
+
 $(document).ready(function() {
   $(".triangle-row span").mouseenter(function() {
     var clazz = $(this).attr("class");
@@ -35,8 +54,9 @@ function onOpen(event) {
 }
 
 function onClose(event) {
-  consoleLog("DISCONNECTED");
-  appendClientMessageToView(":", "DISCONNECTED");
+  consoleLog("Disconnected from server");
+  consoleLog("Re-initializing a new fresh connection so server will be available for next action");
+  init();
 }
 
 function onError(event) {
@@ -53,13 +73,13 @@ function onMessage(event) {
   appendServerMessageToView("Server", receivedData.body);
 }
 
-function appendClientMessageToView(title, message) {
-  $("#message-content").append("<span>" + title + ": " + message + "<br /></span>");
-}
+// function appendClientMessageToView(title, message) {
+//   $("#message-content").append("<span>" + title + ": " + message + "<br /></span>");
+// }
 
-function appendServerMessageToView(title, message) {
-  $("#message-content").append("<span>" + title + ": " + message + "<br /><br /></span>");
-}
+// function appendServerMessageToView(title, message) {
+//   $("#message-content").append("<span>" + title + ": " + message + "<br /><br /></span>");
+// }
 
 function consoleLog(message) {
   console.log("New message: ", message);

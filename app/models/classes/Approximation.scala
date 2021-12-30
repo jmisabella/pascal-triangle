@@ -1,4 +1,4 @@
 package models.classes
 
-// TODO: use inside of a behavior
+// TODO: make to JSON for this class and test
 case class Approximation(actual: BigInt, approximation: String)
