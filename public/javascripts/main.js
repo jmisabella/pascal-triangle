@@ -43,6 +43,7 @@ function init() {
   var host = location.origin.replace(/^https/, 'wss').replace(/^http/, 'ws'); 
   webSocket = new WebSocket(`${host}/ws`);
 
+
   webSocket.onopen = onOpen;
   });
     $("#modal-content").html("");
