@@ -14,8 +14,8 @@ $(document).on('mousemove', function(e){
 
 $("#rows").on('keyup', function(e){
   var rows = $(this).val().replace(/[^0-9]/g,'');
-  if (rows > 1000) {
-    rows = 1000;
+  if (rows > 500) {
+    rows = 500;
   }
   $(this).val(rows);
 

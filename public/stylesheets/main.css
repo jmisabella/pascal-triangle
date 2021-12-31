@@ -1,4 +1,10 @@
+body {
+  margin: 4px !important;
+}
 
+.fixed {
+  position:fixed;
+}
 
 #font-volume {
   padding: 0 12px;
@@ -6,8 +12,18 @@
 }
 
 #font-volume button {
-  width: 160px;
+  width: 100px;
   font-weight: bold;
+  background-color: #d7e5e5;
+}
+
+#rows {
+  width: 100px;
+  -webkit-appearance: none;
+  -moz-appearance: textfield;
+  /* background-color: #a8fbfc; */
+  background-color: #e0ffff;
+  padding: 0 7px;
 }
 
 #modal {
