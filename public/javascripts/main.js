@@ -2,7 +2,10 @@ var webSocket;
 var messageInput;
 
 function init() {
-    webSocket = new WebSocket("ws://localhost:9000/ws");
+    // webSocket = new WebSocket("ws://localhost:9000/ws");
+    var host = location.origin.replace(/^https/, 'wss').replace(/^http/, 'ws'); 
+    webSocket = new WebSocket(`${host}/ws`);
+
     webSocket.onopen = onOpen;
     webSocket.onclose = onClose;
     webSocket.onmessage = onMessage;
