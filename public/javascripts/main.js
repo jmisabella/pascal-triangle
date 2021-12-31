@@ -43,21 +43,10 @@ function init() {
   var host = location.origin.replace(/^https/, 'wss').replace(/^http/, 'ws'); 
   webSocket = new WebSocket(`${host}/ws`);
 
-
   webSocket.onopen = onOpen;
-  });
-    $("#modal-content").html("");
-  $(".triangle-row span").mouseleave(function() {
-  });
-    $("#modal-content").html(clazz);
-    var clazz = $(this).attr("class");
-  $(".triangle-row span").mouseenter(function() {
-
-
-  $("#message-input").focus();
-  webSocket.onerror = onError;
-  webSocket.onmessage = onMessage;
   webSocket.onclose = onClose;
+  webSocket.onmessage = onMessage;
+  webSocket.onerror = onError;
 }
 
 function onOpen(event) {
