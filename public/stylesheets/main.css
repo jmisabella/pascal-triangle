@@ -12,9 +12,11 @@ body {
 }
 
 #font-volume button {
-  width: 70px;
+  width: 40px !important;
+  max-width: 40px !important;
   font-weight: bold;
   background-color: #d7e5e5;
+  color: #000;
 }
 
 #rows {
