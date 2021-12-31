@@ -1,68 +1,180 @@
 var webSocket;
 var messageInput;
 
-function init() {
-    // webSocket = new WebSocket("ws://localhost:9000/ws");
-    var host = location.origin.replace(/^https/, 'wss').replace(/^http/, 'ws'); 
-    webSocket = new WebSocket(`${host}/ws`);
+$(document).on('mousemove', function(e){
+  $("#modal").css({
+    //  left:  e.pageX - 7,
+    //  top:   e.pageY - 30,
+    //  show: false 
+     left:  e.pageX - 7,
+     top:   e.pageY - 60,
+     show: false 
+  });
+});
 
-    webSocket.onopen = onOpen;
-    webSocket.onclose = onClose;
-    webSocket.onmessage = onMessage;
-    webSocket.onerror = onError;
-    $("#message-input").focus();
+$("#rows").on('keyup', function(e){
+  var rows = $(this).val().replace(/[^0-9]/g,'');
+  if (rows > 500) {
+    rows = 500;
+  }
+  $(this).val(rows);
+
+  // create the message as json
+  let jsonMessage = {
+    message: rows 
+  };
+
+  // send our json message to the server
+  sendToServer(jsonMessage);
+});
+
+$(document).ready(function() {
+  $(".triangle-row span").mouseenter(function() {
+    var clazz = $(this).attr("class");
+    $("#modal-content").html(clazz);
+  });
+  $(".triangle-row span").mouseleave(function() {
+    $("#modal-content").html("");
+  });
+});
+
+function init() {
+  // webSocket = new WebSocket("ws://localhost:9000/ws");
+  var host = location.origin.replace(/^https/, 'wss').replace(/^http/, 'ws'); 
+  webSocket = new WebSocket(`${host}/ws`);
+
+  webSocket.onopen = onOpen;
+  });
+    $("#modal-content").html("");
+  $(".triangle-row span").mouseleave(function() {
+  });
+    $("#modal-content").html(clazz);
+    var clazz = $(this).attr("class");
+  $(".triangle-row span").mouseenter(function() {
+
+
+  $("#message-input").focus();
+  webSocket.onerror = onError;
+  webSocket.onmessage = onMessage;
+  webSocket.onclose = onClose;
 }
 
 function onOpen(event) {
-    consoleLog("CONNECTED");
+  consoleLog("CONNECTED");
 }
 
 function onClose(event) {
-    consoleLog("DISCONNECTED");
-    appendClientMessageToView(":", "DISCONNECTED");
+  consoleLog("Disconnected from server");
+  consoleLog("Re-initializing a new fresh connection so server will be available for next action");
+  init();
 }
 
 function onError(event) {
-    consoleLog("ERROR: " + event.data);
-    consoleLog("ERROR: " + JSON.stringify(event));
+  consoleLog("ERROR: " + event.data);
+  consoleLog("ERROR: " + JSON.stringify(event));
 }
 
 function onMessage(event) {
-    console.log(event.data);
-    let receivedData = JSON.parse(event.data);
-    console.log("New Data: ", receivedData);
-    // get the text from the "body" field of the json we
-    // receive from the server.
-    appendServerMessageToView("Server", receivedData.body);
+  // console.log(event.data);
+  let receivedData = JSON.parse(event.data);
+  // console.log("New Data: ", receivedData);
+
+  var i;
+  var markup = "";
+  for (i = 0; i < receivedData.body.rows.length; ++i) {
+    var fontSizePixels = 6;
+    if (i == 0) {
+      fontSizePixels = 26;
+    } else if (i == 1) {
+      fontSizePixels = 20;
+    } else if (i == 2) {
+      fontSizePixels = 16;
+    } else if (i == 3) {
+      fontSizePixels = 14;
+    } else if (i == 4) {
+      fontSizePixels = 13;
+    } else if (i == 5) {
+      fontSizePixels = 12;
+    } else if (i == 6) {
+      fontSizePixels = 11;
+    } else if (i == 7 || i == 8) {
+      fontSizePixels = 10;
+    } else if (i >= 9 && i <= 19) {
+      fontSizePixels = 9;
+    } else {
+      fontSizePixels = 8;
+    }
+    markup = markup + triangleRowMarkup(receivedData.body.rows[i], fontSizePixels); 
+  }
+
+  $("#triangle").html(markup);
+
+  $(".triangle-row span").mouseenter(function() {
+    var clazz = $(this).attr("class");
+    $("#modal-content").html(clazz);
+  });
+  $(".triangle-row span").mouseleave(function() {
+    $("#modal-content").html("");
+  });
 }
 
-function appendClientMessageToView(title, message) {
-    $("#message-content").append("<span>" + title + ": " + message + "<br /></span>");
+
+$("#plus").click(function (e) {
+  console.log("increasing font size");
+  $('.triangle-row').each(function(i, obj) {
+    var previousFontSize = parseInt($(this).attr("style").replace("font-size:", "").replace("px", "").replace(";", ""));
+    var newFontSize = previousFontSize + 1;
+    $( this ).css({"font-size":newFontSize+"px"});
+  });
+});
+
+$("#minus").click(function (e) {
+  console.log("decreasing font size");
+  $('.triangle-row').each(function(i, obj) {
+    var previousFontSize = parseInt($(this).attr("style").replace("font-size:", "").replace("px", "").replace(";", ""));
+    var newFontSize = previousFontSize - 1;
+    $( this ).css({"font-size":newFontSize+"px"});
+  });
+});
+
+function head(lst) {
+  return lst[0];
 }
 
-function appendServerMessageToView(title, message) {
-    $("#message-content").append("<span>" + title + ": " + message + "<br /><br /></span>");
+function tail(lst) {
+  return lst.slice(1);
+}
+
+function triangleRowMarkup(rowObjArray, fontPixelSize=6) {
+  var markup = "<div class='triangle-row' style='font-size:" + fontPixelSize + "px'>";
+  var remaining = rowObjArray.row; 
+  while (remaining.length > 0) {
+    var next = head(remaining);
+    remaining = tail(remaining);
+    markup += "<span class='" + next.actual + "'>" + next.approximation + "</span>"
+  }
+  return markup + "</div>";
 }
 
 function consoleLog(message) {
-    console.log("New message: ", message);
+  console.log("New message: ", message);
 }
 
 window.addEventListener("load", init, false);
 
 $("#send-button").click(function (e) {
-    console.log("Sending ...");
-    getMessageAndSendToServer();
-    // put focus back in the textarea
-    $("#message-input").focus();
+  console.log("Sending ...");
+  getMessageAndSendToServer();
+  // put focus back in the textarea
+  $("#message-input").focus();
 });
 
 // send the message when the user presses the <enter> key while in the textarea
 $(window).on("keydown", function (e) {
-    if (e.which == 13) {
-        getMessageAndSendToServer();
-        return false;
-    }
+  if (e.which == 13) {
+    getMessageAndSendToServer();
+    return false;
+  }
 });
 
 // there’s a lot going on here:
@@ -72,36 +184,35 @@ $(window).on("keydown", function (e) {
 // 4. send the message to the server.
 function getMessageAndSendToServer() {
 
-    // get the text from the textarea
-    messageInput = $("#message-input").val();
+  // get the text from the textarea
+  messageInput = $("#message-input").val();
 
-    // clear the textarea
-    $("#message-input").val("");
+  // clear the textarea
+  $("#message-input").val("");
 
-    // if the trimmed message was blank, return now
-    if ($.trim(messageInput) == "") {
-        return false;
-    }
+  // if the trimmed message was blank, return now
+  if ($.trim(messageInput) == "") {
+    return false;
+  }
 
-    // add the message to the view/div
-    appendClientMessageToView("Me", messageInput);
+  // add the message to the view/div
+  appendClientMessageToView("Me", messageInput);
 
-    // create the message as json
-    let jsonMessage = {
-        message: messageInput
-    };
+  // create the message as json
+  let jsonMessage = {
+    message: messageInput
+  };
 
-    // send our json message to the server
-    sendToServer(jsonMessage);
+  // send our json message to the server
+  sendToServer(jsonMessage);
 }
 
 // send the data to the server using the WebSocket
 function sendToServer(jsonMessage) {
-    if(webSocket.readyState == WebSocket.OPEN) {
-        consoleLog("SENT: " + jsonMessage.message);
-        webSocket.send(JSON.stringify(jsonMessage));
-    } else {
-        consoleLog("Could not send data. Websocket is not open.");
-    }
+  if(webSocket.readyState == WebSocket.OPEN) {
+    consoleLog("SENT: " + jsonMessage.message);
+    webSocket.send(JSON.stringify(jsonMessage));
+  } else {
+    consoleLog("Could not send data. Websocket is not open.");
+  }
 }
-
