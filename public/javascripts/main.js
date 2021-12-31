@@ -26,8 +26,6 @@ $("#rows").on('keyup', function(e){
 
   // send our json message to the server
   sendToServer(jsonMessage);
-
-
 });
 
 $(document).ready(function() {
@@ -75,26 +73,20 @@ function onError(event) {
 }
 
 function onMessage(event) {
-  console.log(event.data);
+  // console.log(event.data);
   let receivedData = JSON.parse(event.data);
-  console.log("New Data: ", receivedData);
-  // get the text from the "body" field of the json we
-  // receive from the server.
-  
-  // var firstRow = head(receivedData.body.rows);
-  // console.log("HERE: " + head(firstRow.row).actual);
-  // console.log("HERE: " + head(firstRow.row).approximation);
+  // console.log("New Data: ", receivedData);
 
   var i;
   var markup = "";
   for (i = 0; i < receivedData.body.rows.length; ++i) {
     var fontSizePixels = 6;
     if (i == 0) {
-      fontSizePixels = 20;
+      fontSizePixels = 26;
     } else if (i == 1) {
-      fontSizePixels = 18;
+      fontSizePixels = 20;
     } else if (i == 2) {
-      fontSizePixels = 15;
+      fontSizePixels = 16;
     } else if (i == 3) {
       fontSizePixels = 14;
     } else if (i == 4) {
@@ -107,37 +99,41 @@ function onMessage(event) {
       fontSizePixels = 10;
     } else if (i >= 9 && i <= 19) {
       fontSizePixels = 9;
-    // } else if (i >= 20 && i <= 35) {
-    //   fontSizePixels = 8;
-    // } else if (i >= 36 && i <= 46) {
-    //   fontSizePixels = 7;
-    // } else if (i >= 47 && i <= 52) {
-    //   fontSizePixels = 6;
     } else {
-      // fontSizePixels = 5;
       fontSizePixels = 8;
     }
     markup = markup + triangleRowMarkup(receivedData.body.rows[i], fontSizePixels); 
   }
-  // alert(markup);
-  // alert(receivedData.body);
-
 
   $("#triangle").html(markup);
 
   $(".triangle-row span").mouseenter(function() {
     var clazz = $(this).attr("class");
     $("#modal-content").html(clazz);
-    // $("#modal").fadeIn(500);
   });
   $(".triangle-row span").mouseleave(function() {
     $("#modal-content").html("");
-    // $("#modal").fadeOut(100);
   });
-
-
-  // $("#triangle").html("<span>" + receivedData.body + "<br /><br /></span>");
 }
+
+
+$("#plus").click(function (e) {
+  console.log("increasing font size");
+  $('.triangle-row').each(function(i, obj) {
+    var previousFontSize = parseInt($(this).attr("style").replace("font-size:", "").replace("px", "").replace(";", ""));
+    var newFontSize = previousFontSize + 1;
+    $( this ).css({"font-size":newFontSize+"px"});
+  });
+});
+
+$("#minus").click(function (e) {
+  console.log("decreasing font size");
+  $('.triangle-row').each(function(i, obj) {
+    var previousFontSize = parseInt($(this).attr("style").replace("font-size:", "").replace("px", "").replace(";", ""));
+    var newFontSize = previousFontSize - 1;
+    $( this ).css({"font-size":newFontSize+"px"});
+  });
+});
 
 function head(lst) {
   return lst[0];
@@ -148,7 +144,7 @@ function tail(lst) {
 }
 
 function triangleRowMarkup(rowObjArray, fontPixelSize=6) {
-  var markup = "<div class='triangle-row font-" + fontPixelSize + "'>";
+  var markup = "<div class='triangle-row' style='font-size:" + fontPixelSize + "px'>";
   var remaining = rowObjArray.row; 
   while (remaining.length > 0) {
     var next = head(remaining);

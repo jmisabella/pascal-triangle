@@ -1,4 +1,15 @@
 
+
+#font-volume {
+  padding: 0 12px;
+  float:right;
+}
+
+#font-volume button {
+  width: 160px;
+  font-weight: bold;
+}
+
 #modal {
   min-height:0;
   min-width:0;
