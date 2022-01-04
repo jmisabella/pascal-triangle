@@ -4,14 +4,21 @@ body {
 
 .fixed {
   position:fixed;
+  min-width: 380px;
 }
 
-#font-volume {
+.controls {
   padding: 0 12px;
-  float:right;
+  float:left;
 }
 
-#font-volume button {
+.controls a {
+  font-size: 10px;
+  padding: 0 6px;
+  float: left;
+}
+
+.controls button {
   width: 40px !important;
   max-width: 40px !important;
   font-weight: bold;
@@ -19,13 +26,30 @@ body {
   color: #000;
 }
 
-#rows {
-  width: 100px;
+.textbox {
+  /* width: 100px; */
   -webkit-appearance: none;
   -moz-appearance: textfield;
   /* background-color: #a8fbfc; */
   background-color: #e0ffff;
   padding: 0 7px;
+}
+
+#probability-n,
+#probability-k,
+#combination-n,
+#combination-k
+{
+  width: 50px;
+}
+
+#rows {
+  width: 100px;
+  /* width: 100px;
+  -webkit-appearance: none;
+  -moz-appearance: textfield;
+  background-color: #e0ffff;
+  padding: 0 7px; */
 }
 
 #modal {

@@ -28,6 +28,19 @@ $("#rows").on('keyup', function(e){
   sendToServer(jsonMessage);
 });
 
+$("#probability-n").on("keyup", function(e) {
+  // TODO:
+});
+$("#probability-k").on("keyup", function(e) {
+  // TODO:
+});
+$("#combination-n").on("keyup", function(e) {
+  // TODO:
+});
+$("#combination-k").on("keyup", function(e) {
+  // TODO:
+});
+
 $(document).ready(function() {
   $(".triangle-row span").mouseenter(function() {
     var clazz = $(this).attr("class");
@@ -36,6 +49,42 @@ $(document).ready(function() {
   $(".triangle-row span").mouseleave(function() {
     $("#modal-content").html("");
   });
+  $("#div-combination-controls").hide();
+  $("#div-probability-controls").hide();
+});
+
+$("#triangle-view").on("click", function (e) {
+  $("#div-triangle-controls").show();
+  $("#div-combination-controls").hide();
+  $("#div-probability-controls").hide();
+  $("#rows").val("");
+  $("#probability-n").val("");
+  $("#probability-k").val("");
+  $("#compatibility-n").val("");
+  $("#compatibility-k").val("");
+  $("#triangle").html("");
+});
+$("#combination-view").on("click", function (e) {
+  $("#div-triangle-controls").hide();
+  $("#div-combination-controls").show();
+  $("#div-probability-controls").hide();
+  $("#rows").val("");
+  $("#probability-n").val("");
+  $("#probability-k").val("");
+  $("#compatibility-n").val("");
+  $("#compatibility-k").val("");
+  $("#triangle").html("");
+});
+$("#probability-view").on("click", function (e) {
+  $("#div-triangle-controls").hide();
+  $("#div-combination-controls").hide();
+  $("#div-probability-controls").show();
+  $("#rows").val("");
+  $("#probability-n").val("");
+  $("#probability-k").val("");
+  $("#compatibility-n").val("");
+  $("#compatibility-k").val("");
+  $("#triangle").html("");
 });
 
 function init() {
@@ -107,7 +156,6 @@ function onMessage(event) {
     $("#modal-content").html("");
   });
 }
-
 
 $("#plus").click(function (e) {
   console.log("increasing font size");
