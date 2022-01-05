@@ -75,7 +75,7 @@ body {
   padding: 1px;
 }
 
-.triangle-row {
+.triangle-row, .msg {
   text-align: center;
 }
 

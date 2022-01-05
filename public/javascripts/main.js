@@ -18,27 +18,97 @@ $("#rows").on('keyup', function(e){
     rows = 500;
   }
   $(this).val(rows);
-
+  var msg = "rows=" + rows;
+  // let jsonMessage = {
+  //   message: rows 
+  // };
   // create the message as json
   let jsonMessage = {
-    message: rows 
+    message: msg 
   };
-
   // send our json message to the server
   sendToServer(jsonMessage);
 });
 
 $("#probability-n").on("keyup", function(e) {
-  // TODO:
+  var n = $(this).val().replace(/[^0-9]/g,'');
+  var k = $("#probability-k").val().replace(/[^0-9]/g,'');
+  if (n > 500) {
+    n = 500;
+  }
+  if (n > '' && k > n) {
+    k = n;
+  }
+  $("#probability-n").val(n);
+  $("#probability-k").val(k);
+  if (n && k) {
+    var msg = "probability-n=" + n + ";probability-k=" + k;
+    let jsonMessage = {
+      message: msg 
+    };
+    // send our json message to the server
+    sendToServer(jsonMessage);
+  }
 });
 $("#probability-k").on("keyup", function(e) {
-  // TODO:
+  var k = $(this).val().replace(/[^0-9]/g,'');
+  var n = $("#probability-n").val().replace(/[^0-9]/g,'');
+  if (n > 500) {
+    n = 500;
+  }
+  if (n > '' && k > n) {
+    k = n;
+  }
+  $("#probability-n").val(n);
+  $("#probability-k").val(k);
+  if (n && k) {
+    var msg = "probability-n=" + n + ";probability-k=" + k;
+    let jsonMessage = {
+      message: msg 
+    };
+    // send our json message to the server
+    sendToServer(jsonMessage);
+  }
 });
 $("#combination-n").on("keyup", function(e) {
-  // TODO:
+  var n = $(this).val().replace(/[^0-9]/g,'');
+  var k = $("#combination-k").val().replace(/[^0-9]/g,'');
+  if (n > 500) {
+    n = 500;
+  }
+  if (n > '' && k > n) {
+    k = n;
+  }
+  $("#combination-n").val(n);
+  $("#combination-k").val(k);
+  if (n && k) {
+    var msg = "combination-n=" + n + ";combination-k=" + k;
+    let jsonMessage = {
+      message: msg 
+    };
+    // send our json message to the server
+    sendToServer(jsonMessage);
+  }
 });
 $("#combination-k").on("keyup", function(e) {
-  // TODO:
+  var k = $(this).val().replace(/[^0-9]/g,'');
+  var n = $("#combination-n").val().replace(/[^0-9]/g,'');
+  if (n > 500) {
+    n = 500;
+  }
+  if (n > '' && k > n) {
+    k = n;
+  }
+  $("#combination-n").val(n);
+  $("#combination-k").val(k);
+  if (n && k) {
+    var msg = "combination-n=" + n + ";combination-k=" + k;
+    let jsonMessage = {
+      message: msg 
+    };
+    // send our json message to the server
+    sendToServer(jsonMessage);
+  }
 });
 
 $(document).ready(function() {
@@ -120,6 +190,9 @@ function onMessage(event) {
 
   var i;
   var markup = "";
+  // if (receivedData.body.msg) {
+  //   markup = markup + "<div class='msg' style='font-size:" + 26 + "px'>" + receivedData.body.msg + "</div>";
+  // }
   for (i = 0; i < receivedData.body.rows.length; ++i) {
     var fontSizePixels = 6;
     if (i == 0) {
@@ -144,6 +217,9 @@ function onMessage(event) {
       fontSizePixels = 8;
     }
     markup = markup + triangleRowMarkup(receivedData.body.rows[i], fontSizePixels); 
+  }
+  if (receivedData.body.msg) {
+    markup = markup + "<div class='msg' style='font-size:" + fontSizePixels + "px'>" + receivedData.body.msg + "</div>";
   }
 
   $("#triangle").html(markup);
@@ -249,6 +325,15 @@ function getMessageAndSendToServer() {
 function sendToServer(jsonMessage) {
   if(webSocket.readyState == WebSocket.OPEN) {
     consoleLog("SENT: " + jsonMessage.message);
+    // var args = parseArgs(jsonMessage.message);
+    // if (args["rows"]) {
+    //   alert(args["rows"]);
+    // } else if (args["combination-n"]) {
+    //   alert("COMBINATION N");
+    // } else if (args["probability-n"]) {
+    //   alert("PROBABILITY N");
+    // }
+
     webSocket.send(JSON.stringify(jsonMessage));
   } else {
     consoleLog("Could not send data. Websocket is not open.");

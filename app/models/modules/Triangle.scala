@@ -10,7 +10,7 @@ case object Triangle extends PascalsTriangleByElementWiseAddition with Exponenti
   override type _ElementWiseAddition = ElementWiseAddition
   override val addition = _addition
 
-  def formattedTriangleJson(rows: Int, maxIntegerLength: Int, scale: Int): String = {
+  def formattedResultJson(rows: Int, maxIntegerLength: Int, scale: Int): String = {
     val values: Seq[Seq[BigInt]] = Triangle.pascalTriangle(rows)
     val approximations: Seq[Approximations] = values.map(x => Triangle.format(x, maxIntegerLength, scale)).toList
     val json = approximations.mkString("""{ "rows": [""", ", ", """]}""")
