@@ -60,7 +60,6 @@ $("#probability-k").on("keyup", function(e) {
     let jsonMessage = {
       message: msg 
     };
-    // send our json message to the server
     sendToServer(jsonMessage);
   }
 });
@@ -150,7 +149,6 @@ $("#probability-view").on("click", function (e) {
 });
 
 function init() {
-  // webSocket = new WebSocket("ws://localhost:9000/ws");
   var host = location.origin.replace(/^https/, 'wss').replace(/^http/, 'ws'); 
   webSocket = new WebSocket(`${host}/ws`);
 
@@ -176,15 +174,10 @@ function onError(event) {
 }
 
 function onMessage(event) {
-  // console.log(event.data);
   let receivedData = JSON.parse(event.data);
-  // console.log("New Data: ", receivedData);
 
   var i;
   var markup = "";
-  // if (receivedData.body.msg) {
-  //   markup = markup + "<div class='msg' style='font-size:" + 26 + "px'>" + receivedData.body.msg + "</div>";
-  // }
   var optionalBoldColumn = '';
   if (receivedData.body.msg && receivedData.body.msg.includes("combinations is row ")) {
     var remaining = receivedData.body.msg.substring(receivedData.body.msg.indexOf("column ") + "column ".length);
