@@ -44,7 +44,7 @@ case object Combo extends ExponentialApproximation {
         val approximations: Seq[Approximations] = triangle.map(x => format(x, maxIntegerLength, scale)).toList
         val approximationsLastRow: Approximations = approximations.reverse.head
         val combinations = approximationsLastRow.approximations(k).approximation
-        val msg = s""" ${n}C${k} combinations is row ${n+1} column ${k+1} in pascal's triangle which is ${combinations}""" 
+        val msg = s""" ${n}C${k} combinations is row ${n+1} column ${k+1} of pascal's triangle, ${combinations}""" 
         val json = approximations.mkString("""{ "rows": [""", ", ", "]") + s""", "msg": "$msg"}"""
         json
       }

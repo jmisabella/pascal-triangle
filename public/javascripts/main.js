@@ -113,7 +113,7 @@ $("#combination-k").on("keyup", function(e) {
 
 $(document).ready(function() {
   $(".triangle-row span").mouseenter(function() {
-    var clazz = $(this).attr("class");
+    var clazz = head($(this).attr("class").split(" "));
     $("#modal-content").html(clazz);
   });
   $(".triangle-row span").mouseleave(function() {
@@ -193,6 +193,11 @@ function onMessage(event) {
   // if (receivedData.body.msg) {
   //   markup = markup + "<div class='msg' style='font-size:" + 26 + "px'>" + receivedData.body.msg + "</div>";
   // }
+  var optionalBoldColumn = '';
+  if (receivedData.body.msg && receivedData.body.msg.includes("combinations is row ")) {
+    var remaining = receivedData.body.msg.substring(receivedData.body.msg.indexOf("column ") + "column ".length);
+    optionalBoldColumn = remaining.split(" ")[0];
+  }
   for (i = 0; i < receivedData.body.rows.length; ++i) {
     var fontSizePixels = 6;
     if (i == 0) {
@@ -216,16 +221,21 @@ function onMessage(event) {
     } else {
       fontSizePixels = 8;
     }
-    markup = markup + triangleRowMarkup(receivedData.body.rows[i], fontSizePixels); 
+    if (i == receivedData.body.rows.length - 1) { // last row, apply any bold columns...
+      markup = markup + triangleRowMarkup(receivedData.body.rows[i], fontSizePixels, optionalBoldColumn); 
+    } else {
+      markup = markup + triangleRowMarkup(receivedData.body.rows[i], fontSizePixels); 
+    }
   }
   if (receivedData.body.msg) {
-    markup = markup + "<div class='msg' style='font-size:" + fontSizePixels + "px'>" + receivedData.body.msg + "</div>";
+    // markup = markup + "<div class='msg' style='font-size:" + fontSizePixels + "px'>" + receivedData.body.msg + "</div>";
+    markup = markup + "<div class='msg' >" + receivedData.body.msg + "</div>";
   }
 
   $("#triangle").html(markup);
 
   $(".triangle-row span").mouseenter(function() {
-    var clazz = $(this).attr("class");
+    var clazz = head($(this).attr("class").split(" "));
     $("#modal-content").html(clazz);
   });
   $(".triangle-row span").mouseleave(function() {
@@ -259,13 +269,19 @@ function tail(lst) {
   return lst.slice(1);
 }
 
-function triangleRowMarkup(rowObjArray, fontPixelSize=6) {
+function triangleRowMarkup(rowObjArray, fontPixelSize=6, highlightedColumnInFinalRow='') {
   var markup = "<div class='triangle-row' style='font-size:" + fontPixelSize + "px'>";
   var remaining = rowObjArray.row; 
+  var column = 1; 
   while (remaining.length > 0) {
+    var optionalBoldClass = ''
+    if (column.toString() == highlightedColumnInFinalRow || highlightedColumnInFinalRow == '*') {
+      optionalBoldClass = " bold";
+    }
     var next = head(remaining);
     remaining = tail(remaining);
-    markup += "<span class='" + next.actual + "'>" + next.approximation + "</span>"
+    markup += "<span class='" + next.actual + optionalBoldClass + "'>" + next.approximation + "</span>";
+    column += 1;
   }
   return markup + "</div>";
 }

@@ -69,10 +69,19 @@ body {
   width: auto !important;
 }
 
+.bold {
+  font-weight: bold !important;
+  font-size: larger;
+}
+
 #triangle {
   /* width: 700px;  */
   margin: 1px; 
   padding: 1px;
+}
+
+.msg {
+  font-size: 14px !important;
 }
 
 .triangle-row, .msg {
