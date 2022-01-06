@@ -1,6 +1,6 @@
 package models
 
-import models.modules.Triangle
+import models.modules.{ Triangle, Combo, Prob }
 
 import akka.actor._
 import play.api.libs.json._
@@ -19,6 +19,8 @@ class SimpleWebSocketActor(clientActorRef: ActorRef) extends Actor {
 
   logger.info(s"SimpleWebSocketActor class started")
 
+  private def parseArgs(rawMsg: String): Map[String, String] = rawMsg.split(";").map(kv => kv.split("=").head -> kv.split("=").tail.head).toMap
+
   // this is where we receive json messages sent by the client
   // and send them a json reply
   def receive = {
@@ -26,16 +28,17 @@ class SimpleWebSocketActor(clientActorRef: ActorRef) extends Actor {
       logger.info(s"JS-VALUE: $jsValue")
       val clientMessage = getMessage(jsValue)
 
-      val rows = clientMessage.toInt
+      // TODO: parse args
+      val args: Map[String, String] = parseArgs(clientMessage)
+      val result: String = 
+      args.keySet match {
+        case s if (s == Set("rows")) => Triangle.formattedResultJson(args("rows").toInt, 6, 2)
+        case s if (s == Set("combination-n", "combination-k")) => Combo.formattedResultJson(args("combination-n").toInt, args("combination-k").toInt, 6, 2)
+        case s if (s == Set("probability-n", "probability-k")) => Prob.formattedResultJson(args("probability-n").toInt, args("probability-k").toInt, 6, 2)
+        case u => throw new IllegalArgumentException(s"From args [$clientMessage], unexpected arg key combination [$u]")
+      } 
 
       println("beginning processing...") 
-
-      // val result0: Seq[Seq[BigInt]] = Triangle.pascalTriangle(rows)
-      // val result1: Seq[Approximations] = result0.map(x => Triangle.format(x, 6, 2)).toList
-      // val result = result1.mkString("""{ "rows": [""", ", ", """]}""")
-
-      val result: String = Triangle.formattedTriangleJson(rows, 6, 2)
-      // println("HEYYY: " + result)
 
       val json: JsValue = Json.parse(s"""{ "body": $result }""")
       // val json: JsValue = Json.parse(s"""{"body": "You said, ‘$clientMessage’"}""")

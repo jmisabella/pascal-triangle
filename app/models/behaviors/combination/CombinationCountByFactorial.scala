@@ -14,4 +14,10 @@ trait CombinationCountByFactorial extends CombinationCount {
     val count = factorial.factorial(n) / (factorial.factorial(k) * factorial.factorial(n - k))
     Combination(n, k, count)
   }
+
+  // TODO: test
+  override def combinationCountAndSolution(n: Int, k: Int): (Combination, Either[String, Seq[Seq[BigInt]]]) = {
+    val count = factorial.factorial(n) / (factorial.factorial(k) * factorial.factorial(n - k))
+    (Combination(n, k, count), Left(s"${n}C${k} = n! / (k! * (n-k)!)"))
+  }
 }

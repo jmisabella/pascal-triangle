@@ -13,4 +13,13 @@ trait CombinationCountByPascalsTriangle extends CombinationCount {
     val count: BigInt = row(k)
     Combination(n, k, count)
   }
+
+  // TODO: test
+  override def combinationCountAndSolution(n: Int, k: Int): (Combination, Either[String, Seq[Seq[BigInt]]]) = {
+    val triangle = pascal.pascalTriangle(n + 1)
+    val row: Seq[BigInt] = triangle(n)
+    val count: BigInt = row(k)
+    (Combination(n, k, count), Right(triangle))
+  }
+
 }
