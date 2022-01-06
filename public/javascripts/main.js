@@ -19,14 +19,9 @@ $("#rows").on('keyup', function(e){
   }
   $(this).val(rows);
   var msg = "rows=" + rows;
-  // let jsonMessage = {
-  //   message: rows 
-  // };
-  // create the message as json
   let jsonMessage = {
     message: msg 
   };
-  // send our json message to the server
   sendToServer(jsonMessage);
 });
 
@@ -46,7 +41,6 @@ $("#probability-n").on("keyup", function(e) {
     let jsonMessage = {
       message: msg 
     };
-    // send our json message to the server
     sendToServer(jsonMessage);
   }
 });
@@ -86,7 +80,6 @@ $("#combination-n").on("keyup", function(e) {
     let jsonMessage = {
       message: msg 
     };
-    // send our json message to the server
     sendToServer(jsonMessage);
   }
 });
@@ -106,7 +99,6 @@ $("#combination-k").on("keyup", function(e) {
     let jsonMessage = {
       message: msg 
     };
-    // send our json message to the server
     sendToServer(jsonMessage);
   }
 });
@@ -130,8 +122,8 @@ $("#triangle-view").on("click", function (e) {
   $("#rows").val("");
   $("#probability-n").val("");
   $("#probability-k").val("");
-  $("#compatibility-n").val("");
-  $("#compatibility-k").val("");
+  $("#combination-n").val("");
+  $("#combination-k").val("");
   $("#triangle").html("");
 });
 $("#combination-view").on("click", function (e) {
@@ -141,8 +133,8 @@ $("#combination-view").on("click", function (e) {
   $("#rows").val("");
   $("#probability-n").val("");
   $("#probability-k").val("");
-  $("#compatibility-n").val("");
-  $("#compatibility-k").val("");
+  $("#combination-n").val("");
+  $("#combination-k").val("");
   $("#triangle").html("");
 });
 $("#probability-view").on("click", function (e) {
@@ -152,8 +144,8 @@ $("#probability-view").on("click", function (e) {
   $("#rows").val("");
   $("#probability-n").val("");
   $("#probability-k").val("");
-  $("#compatibility-n").val("");
-  $("#compatibility-k").val("");
+  $("#combination-n").val("");
+  $("#combination-k").val("");
   $("#triangle").html("");
 });
 
@@ -200,7 +192,6 @@ function onMessage(event) {
   } else if (receivedData.body.msg && receivedData.body.msg.includes("(column ")) {
     var remaining = receivedData.body.msg.substring(receivedData.body.msg.indexOf("(column ") + "(column ".length);
     optionalBoldColumn = remaining.split(" ")[0].replace(")", "").replace("<br />", "").replace("<br/>", "").replace("<br", "");
-    alert(optionalBoldColumn);
   }
   for (i = 0; i < receivedData.body.rows.length; ++i) {
     var fontSizePixels = 6;
@@ -296,63 +287,10 @@ function consoleLog(message) {
 
 window.addEventListener("load", init, false);
 
-$("#send-button").click(function (e) {
-  console.log("Sending ...");
-  getMessageAndSendToServer();
-  // put focus back in the textarea
-  $("#message-input").focus();
-});
-
-// send the message when the user presses the <enter> key while in the textarea
-$(window).on("keydown", function (e) {
-  if (e.which == 13) {
-    getMessageAndSendToServer();
-    return false;
-  }
-});
-
-// there’s a lot going on here:
-// 1. get our message from the textarea.
-// 2. append that message to our view/div.
-// 3. create a json version of the message.
-// 4. send the message to the server.
-function getMessageAndSendToServer() {
-
-  // get the text from the textarea
-  messageInput = $("#message-input").val();
-
-  // clear the textarea
-  $("#message-input").val("");
-
-  // if the trimmed message was blank, return now
-  if ($.trim(messageInput) == "") {
-    return false;
-  }
-
-  // add the message to the view/div
-  appendClientMessageToView("Me", messageInput);
-
-  // create the message as json
-  let jsonMessage = {
-    message: messageInput
-  };
-
-  // send our json message to the server
-  sendToServer(jsonMessage);
-}
-
 // send the data to the server using the WebSocket
 function sendToServer(jsonMessage) {
   if(webSocket.readyState == WebSocket.OPEN) {
     consoleLog("SENT: " + jsonMessage.message);
-    // var args = parseArgs(jsonMessage.message);
-    // if (args["rows"]) {
-    //   alert(args["rows"]);
-    // } else if (args["combination-n"]) {
-    //   alert("COMBINATION N");
-    // } else if (args["probability-n"]) {
-    //   alert("PROBABILITY N");
-    // }
 
     webSocket.send(JSON.stringify(jsonMessage));
   } else {
