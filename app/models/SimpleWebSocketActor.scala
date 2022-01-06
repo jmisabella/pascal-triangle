@@ -1,6 +1,6 @@
 package models
 
-import models.modules.{ Triangle, Combo }
+import models.modules.{ Triangle, Combo, Prob }
 
 import akka.actor._
 import play.api.libs.json._
@@ -34,7 +34,7 @@ class SimpleWebSocketActor(clientActorRef: ActorRef) extends Actor {
       args.keySet match {
         case s if (s == Set("rows")) => Triangle.formattedResultJson(args("rows").toInt, 6, 2)
         case s if (s == Set("combination-n", "combination-k")) => Combo.formattedResultJson(args("combination-n").toInt, args("combination-k").toInt, 6, 2)
-        case s if (s == Set("probability-n", "probability-k")) => ???
+        case s if (s == Set("probability-n", "probability-k")) => Prob.formattedResultJson(args("probability-n").toInt, args("probability-k").toInt, 6, 2)
         case u => throw new IllegalArgumentException(s"From args [$clientMessage], unexpected arg key combination [$u]")
       } 
 

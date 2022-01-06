@@ -23,4 +23,13 @@ trait BooleanProbability {
     Probability(n, k, round(probability, 2)) // rounded to nearest hundredth
   }
 
+  // TODO: test
+  def probabilityAndTriangle(n: Int, k: Int): (Probability, Seq[Seq[BigInt]]) = {
+    val triangle = pascal.pascalTriangle(n + 1)
+    val row: Seq[BigInt] = triangle(n)
+    val denominator: BigInt = row.foldLeft(BigInt(0))(_ + _)
+    val numerator: BigInt = row(k)
+    val probability = (numerator.toDouble / denominator.toDouble) * 100.0
+    (Probability(n, k, round(probability, 2)), triangle) // rounded to nearest hundredth
+  }
 }

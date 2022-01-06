@@ -4,11 +4,11 @@ import models.behaviors.pascal.PascalsTriangleByElementWiseAddition
 import models.behaviors.{ ElementWiseAddition, ExponentialApproximation }
 import models.classes.Approximations
 
-case object _addition extends ElementWiseAddition
+case object _a extends ElementWiseAddition
 
 case object Triangle extends PascalsTriangleByElementWiseAddition with ExponentialApproximation {
   override type _ElementWiseAddition = ElementWiseAddition
-  override val addition = _addition
+  override val addition = _a
 
   def formattedResultJson(rows: Int, maxIntegerLength: Int, scale: Int): String = {
     val values: Seq[Seq[BigInt]] = Triangle.pascalTriangle(rows)
