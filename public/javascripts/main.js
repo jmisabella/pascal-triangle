@@ -197,6 +197,10 @@ function onMessage(event) {
   if (receivedData.body.msg && receivedData.body.msg.includes("combinations is row ")) {
     var remaining = receivedData.body.msg.substring(receivedData.body.msg.indexOf("column ") + "column ".length);
     optionalBoldColumn = remaining.split(" ")[0];
+  } else if (receivedData.body.msg && receivedData.body.msg.includes("(column ")) {
+    var remaining = receivedData.body.msg.substring(receivedData.body.msg.indexOf("(column ") + "(column ".length);
+    optionalBoldColumn = remaining.split(" ")[0].replace(")", "").replace("<br />", "").replace("<br/>", "").replace("<br", "");
+    alert(optionalBoldColumn);
   }
   for (i = 0; i < receivedData.body.rows.length; ++i) {
     var fontSizePixels = 6;
