@@ -2,6 +2,7 @@ package models.modules
 
 import models.classes.{ Approximation, Approximations, Combination }
 import models.behaviors.ExponentialApproximation
+import java.text.NumberFormat
 
 case object Combo extends ExponentialApproximation {
   def formattedResultJson(n: Int, k: Int, maxIntegerLength: Int, scale: Int, maxPascalSize: Int = 500): String = {
@@ -22,8 +23,10 @@ case object Combo extends ExponentialApproximation {
       case Right(triangle) => {
         val approximations: Seq[Approximations] = triangle.map(x => format(x, maxIntegerLength, scale)).toList
         val approximationsLastRow: Approximations = approximations.reverse.head
-        val combinations = approximationsLastRow.approximations(k).approximation
-        val msg = s""" ${n}C${k} combinations is row ${n+1} column ${k+1} of pascal's triangle, ${combinations}""" 
+        val combinations = NumberFormat.getInstance().format(approximationsLastRow.approximations(k).actual)
+        val solution1 = s"""${n}C${k} combinations is row ${n+1} column ${k+1} of pascal's triangle, ${combinations}""" 
+        val solution2 = s"""When selecting $k unique items out of $n total, there are $combinations unique combinations"""
+        val msg = Seq(solution1, solution2).mkString("<br />")   
         val json = approximations.mkString("""{ "rows": [""", ", ", "]") + s""", "msg": "$msg"}"""
         json
       }

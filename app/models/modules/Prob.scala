@@ -15,7 +15,7 @@ case object Prob extends BooleanProbability with ExponentialApproximation {
     val approximationsLastRow: Approximations = approximations.reverse.head
     val sum = NumberFormat.getIntegerInstance().format(approximationsLastRow.map(_.actual).foldLeft(BigInt(0))(_ + _))
     val numerator = NumberFormat.getIntegerInstance().format(approximationsLastRow.approximations(k).actual)
-    val solutionPart1 = approximationsLastRow.map(_.approximation).mkString(" + ") + " = " + sum 
+    val solutionPart1 = "( " + approximationsLastRow.map(_.approximation).mkString(" + ") + " = " + sum + " )"
     val solutionPart2 = s"Denominator is $sum (sum of row ${n+1})"
     val solutionPart3 = s"Numerator is $numerator (column ${k+1})"
     val solutionPart4 = s"$numerator / $sum = ${probable.probability}%"
