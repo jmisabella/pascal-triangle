@@ -31,7 +31,7 @@ $("#probability-n").on("keyup", function(e) {
   if (n > 500) {
     n = 500;
   }
-  if (n > '' && k > n) {
+  if (n > '' && parseInt(k) > parseInt(n)) {
     k = n;
   }
   $("#probability-n").val(n);
@@ -50,7 +50,7 @@ $("#probability-k").on("keyup", function(e) {
   if (n > 500) {
     n = 500;
   }
-  if (n > '' && k > n) {
+  if (n > '' && parseInt(k) > parseInt(n)) {
     k = n;
   }
   $("#probability-n").val(n);
@@ -69,7 +69,7 @@ $("#combination-n").on("keyup", function(e) {
   if (n > 500) {
     n = 500;
   }
-  if (n > '' && k > n) {
+  if (n > '' && parseInt(k) > parseInt(n)) {
     k = n;
   }
   $("#combination-n").val(n);
@@ -88,7 +88,7 @@ $("#combination-k").on("keyup", function(e) {
   if (n > 500) {
     n = 500;
   }
-  if (n > '' && k > n) {
+  if (n > '' && parseInt(k) > parseInt(n)) {
     k = n;
   }
   $("#combination-n").val(n);
