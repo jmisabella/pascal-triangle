@@ -114,6 +114,14 @@ $(document).ready(function() {
   $("#div-probability-controls").hide();
 });
 
+$("#dark-mode").change(function() {
+  if (this.checked) {
+    $("body").removeClass("dark-mode");
+  } else {
+    $("body").addClass("dark-mode");
+  }
+});
+
 $("#triangle-view").on("click", function (e) {
   $("#div-triangle-controls").show();
   $("#div-combination-controls").hide();
